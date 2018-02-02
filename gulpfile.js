@@ -12,6 +12,7 @@ gulp.task('serve', ['sass'], function () {
     });
 
     gulp.watch('./project/*.sass',['sass']);
+    gulp.watch('./project/js/main.js',['js']);
     gulp.watch('./project/*.html').on('change', browserSync.reload);
 });
 
@@ -33,6 +34,12 @@ gulp.task('css', function() {
     .pipe(gulp.dest('./project/css/'))
 });
 
+gulp.task('js', function() {
+   return gulp.src('./project/main.js')
+});
+gulp.task('js', function() {
+    browserSync.reload();
+});
 
 
 gulp.task('default', ['serve']);
