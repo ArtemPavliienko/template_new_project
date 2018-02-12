@@ -4,7 +4,8 @@ const gulp = require('gulp'),
       minifyCSS = require('gulp-csso'),
       rename = require('gulp-rename'),
       autoprefixer = require('gulp-autoprefixer'),
-      browserSync = require('browser-sync').create();
+      browserSync = require('browser-sync').create(),
+      image = require('gulp-image');
 
 
 gulp.task('serve', ['sass', 'babel'], () => {
@@ -43,4 +44,12 @@ gulp.task('babel', () => {
         .pipe(gulp.dest('./project/js/'))
 });
 
+gulp.task('image', function () {
+    gulp.src('./project/img/**/*')
+        .pipe(image())
+        .pipe(gulp.dest('./project/img/'));
+});
+
 gulp.task('default', ['serve']);
+
+gulp.task('cssImg', ['css', 'image']);
