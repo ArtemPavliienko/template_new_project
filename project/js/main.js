@@ -1,4 +1,6 @@
-$('window').ready( () => {
+'use strict';
+
+$('window').ready(function () {
 
     // ...
 
