@@ -44,12 +44,23 @@ gulp.task('babel', () => {
         .pipe(gulp.dest('./project/js/'))
 });
 
-gulp.task('image', function () {
+gulp.task('image', () => {
     gulp.src('./project/img/**/*')
         .pipe(image())
         .pipe(gulp.dest('./project/img/'));
 });
 
+
+gulp.task('delCss', () => {
+    return gulp.src('./project/css/style.css')  // исходник
+        .pipe(uncss({
+            html: ['./project/index.html']
+        }))
+        .pipe(gulp.dest('./project/css/')); // результат
+});
+
+
+
 gulp.task('default', ['serve']);
 
-gulp.task('cssImg', ['css', 'image']);
+gulp.task('cssImg', ['css', 'image', 'delCss']);
