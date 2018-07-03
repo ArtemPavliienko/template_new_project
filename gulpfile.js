@@ -43,6 +43,7 @@ gulp.task('babel', () => {
         .pipe(babel({
             presets: ['env']
         }))
+        .pipe(rename({suffix: '.es5'}))
         .pipe(gulp.dest('./project/js/bab/'))
 });
 
