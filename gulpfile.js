@@ -13,21 +13,22 @@ gulp.task('serve', ['sass', 'babel'], () => {
         server: './project'
     });
 
-    gulp.watch('./project/*.sass',['sass']);
-    gulp.watch('./project/main.js',['babel']).on('change', browserSync.reload);
-    gulp.watch('./project/*.html').on('change', browserSync.reload);
+    gulp.watch('./project/common.blocks/**/*.sass',['sass']);
+    browserSync.watch('project/**/*.*').on('change', browserSync.reload);
 });
 
+
 gulp.task('sass', () => {
-    gulp.watch('./project/*.sass');
-    gulp.src('./project/*.sass')
+    gulp.watch('./project/common.blocks/style.sass');
+    gulp.src('./project/common.blocks/style.sass')
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
-            browsers: ['last 4 versions']
+            browsers: ['last 7 versions']
         }))
         .pipe(gulp.dest('./project/css/'))
         .pipe(browserSync.stream());
 });
+
 
 gulp.task('css', () => {
   gulp.src('./project/css/style.css')
@@ -36,13 +37,15 @@ gulp.task('css', () => {
     .pipe(gulp.dest('./project/css/'))
 });
 
+
 gulp.task('babel', () => {
-    gulp.src('./project/main.js')
+    gulp.src('./project/js/main.js')
         .pipe(babel({
             presets: ['env']
         }))
-        .pipe(gulp.dest('./project/js/'))
+        .pipe(gulp.dest('./project/js/bab/'))
 });
+
 
 gulp.task('image', () => {
     gulp.src('./project/img/**/*')
@@ -52,13 +55,12 @@ gulp.task('image', () => {
 
 
 gulp.task('delCss', () => {
-    return gulp.src('./project/css/style.css')  // исходник
+    return gulp.src('./project/css/style.css')
         .pipe(uncss({
             html: ['./project/index.html']
         }))
-        .pipe(gulp.dest('./project/css/')); // результат
+        .pipe(gulp.dest('./project/css/'));
 });
-
 
 
 gulp.task('default', ['serve']);
